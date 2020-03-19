@@ -1,0 +1,41 @@
+drop table proj_man.tasks;
+drop table proj_man.parent_task;
+drop table proj_man.projects;
+drop table proj_man.users;
+
+create table proj_man.users(
+userid int not null PRIMARY KEY AUTO_INCREMENT,
+firstname varchar(100),
+lastname varchar(100),
+employeeid varchar(45)
+);
+
+create table proj_man.parent_task(
+parentid int not null primary key AUTO_INCREMENT,
+parenttask varchar(100) not null
+);
+
+create table proj_man.projects(
+projectid int not null PRIMARY KEY AUTO_INCREMENT,
+projectnm varchar(100)not null,
+startdate date not null,
+enddate date not null,
+priority int not null,
+userid int,
+FOREIGN key (userid) references users(userid)
+);
+
+create table proj_man.tasks(
+taskid int not null primary key AUTO_INCREMENT,
+parentid int not null,
+projectid int not null,
+taskname varchar(100) not null,
+startdate date not null,
+enddate date not null,
+priority int not null,
+status varchar(100) not null,
+userid int not null,
+FOREIGN key (parentid) references parent_task(parentid),
+FOREIGN key (projectid) references projects(projectid),
+FOREIGN key (userid) references users(userid)
+);
